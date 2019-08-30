@@ -26,7 +26,12 @@ public class NoticeDto {
 		this.writer = writer;
 		this.title = title;
 		this.regdate = regdate; (50점)
-		*/
+		*/	
+	}
+	
+	public NoticeDto(String writer, String title, String content) {
+		this(0,writer,title,content,null);
+		
 	}
 	public int getNum() {
 		return num;

@@ -22,6 +22,4 @@
 	</div>
 	
 </body>
-
-</html>
-	<%@ include file="../inc/footer.jsp"%>
+<%@ include file="../inc/footer.jsp"%>

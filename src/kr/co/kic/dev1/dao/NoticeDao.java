@@ -61,8 +61,8 @@ public class NoticeDao {
 			con = ConnLocator.getConnection();
 			StringBuffer sql = new StringBuffer();
 			sql.append("UPDATE notice ");
-			sql.append("SET n_writer = 'writer1', n_title='title1', n_content='content1', n_regdate=NOW() ");
-			sql.append("WHERE n_num = 1 ");
+			sql.append("SET n_writer = ?, n_title=?, n_content=?, n_regdate=NOW() ");
+			sql.append("WHERE n_num = ? ");
 			
 			pstmt = con.prepareStatement(sql.toString());
 			//바인딩 변수 세팅
@@ -96,7 +96,7 @@ public class NoticeDao {
 			con = ConnLocator.getConnection();
 			StringBuffer sql = new StringBuffer();
 			sql.append("DELETE FROM notice ");
-			sql.append("WHERE n_num = 1 ");
+			sql.append("WHERE n_num = ? ");
 			
 			pstmt = con.prepareStatement(sql.toString());
 			//바인딩 변수 세팅
@@ -171,7 +171,7 @@ public class NoticeDao {
 			StringBuffer sql = new StringBuffer();
 			sql.append("SELECT n_num, n_writer, n_title, DATE_FORMAT(n_regdate,'%Y/%m/%d') ");
 			sql.append("FROM notice ");
-			sql.append("ORDER BY n_num DESC; ");
+			sql.append("ORDER BY n_num DESC ");
 			sql.append("LIMIT ?,? ");
 			
 			pstmt = con.prepareStatement(sql.toString());

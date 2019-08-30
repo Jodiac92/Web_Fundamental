@@ -19,13 +19,13 @@ public class ConnLocator {
 			//jdbc/kic => context.xml의 name속성 값과 일치해야 한다.
 			ds = (DataSource)context.lookup("java:comp/env/jdbc/kic");
 			con = ds.getConnection();
-		} catch (SQLException e) {
+		}catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 		
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return con;
 	}

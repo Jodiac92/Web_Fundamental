@@ -1,5 +1,12 @@
 <%@ page pageEncoding="UTF-8"%>
+<%@page import="kr.co.kic.dev1.dao.NoticeDao"%>
+<%@page import="kr.co.kic.dev1.dto.NoticeDto"%>
+<%@page import="java.util.ArrayList"%>
 <%@ include file="../inc/header.jsp" %>
+<%
+	NoticeDao dao = NoticeDao.getInstance();
+	ArrayList<NoticeDto> list = dao.select(0,100);
+%>
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb justify-content-end">
 			<li class="breadcrumb-item"><a href="/">Home</a></li>
