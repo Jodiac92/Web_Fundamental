@@ -30,6 +30,9 @@
 				<li class="nav-item">
 					<a class="nav-link" href="/notice/list.jsp"><i class="fa fa-font"></i> Noitce</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/member/list.jsp"><i class="fa fa-heart"></i> Member</a> <!-- <i class="fa fa-heart"></i>하트아이콘 -->
+				</li>
 
 			</ul>
 			<ul class="navbar-nav">
@@ -39,6 +42,7 @@
 				<li class="nav-item">
 					<a class="nav-link" href="/member/login.jsp"><i class="fa fa-heart"></i> Login</a> <!-- <i class="fa fa-heart"></i>하트아이콘 -->
 				</li>
+				
 			</ul>
 		</div>
 	</nav>

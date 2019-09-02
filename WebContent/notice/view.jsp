@@ -71,7 +71,7 @@
 								$("#deleteNotice").on('click',function(event){
 									event.preventDefault();
 									//유효성 검사 필요없음
-									f.action = "delete.jsp"
+									f.action = "delete.jsp";
 									f.submit();
 								});
 							});
