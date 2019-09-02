@@ -16,7 +16,7 @@
 	String tempPage = request.getParameter("page");
 	int cPage = 0;
 	if(tempPage == null || tempPage.length()==0){
-		cPage =1;
+		tempPage = "1";
 	}
 	try{
 		cPage = Integer.parseInt(tempPage);
