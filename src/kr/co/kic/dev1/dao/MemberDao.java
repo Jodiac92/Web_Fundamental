@@ -312,6 +312,37 @@ public class MemberDao {
 		}
 		return count;
 	}
+	public boolean isEmail(String email) {
+		boolean isSuccess = false;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int index = 1;
+		try {
+			con = ConnLocator.getConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT m_email FROM member where m_email=?");
+			
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(index, email);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				index = 1;
+				isSuccess = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(con != null) con.close();
+			} catch (SQLException e2) {
+				// TODO: handle exception
+			}
+		}
+		return isSuccess;
+	}
 	
 	public boolean isCheck(String id) {
 		boolean isExisted = false;
