@@ -158,7 +158,6 @@
 							});
 						}
 					});//end of id key event
-					
 					$("#email").on("keyup",function(){
 						$("#email").removeClass("is-invalid");
 						$("#emailMessage").html('');
