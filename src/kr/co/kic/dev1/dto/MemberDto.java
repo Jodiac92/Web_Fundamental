@@ -23,6 +23,11 @@ public class MemberDto {
 		this.regdate = regdate;
 		
 	}
+	public MemberDto(String email, String pwd) {
+		this(0,null,email,null,pwd,null,null);
+	}
+	
+	
 	public MemberDto(int seq, String id, String email, String name, String phone, String regdate) {
 	this(seq,id,email,name,null,phone,regdate);
 	}
@@ -35,6 +40,7 @@ public class MemberDto {
 		this(seq,id,email,name,null,phone,null);
 	}
 	
+
 	public int getSeq() {
 		return seq;
 	}

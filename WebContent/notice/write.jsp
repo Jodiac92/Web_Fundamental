@@ -1,5 +1,9 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="/inc/header.jsp" %>
+<%
+	if(memberDto != null){
+		
+%>
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb justify-content-end">
 			<li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -72,5 +76,11 @@
 
 		</div>
 	</div>
+	<%}else{ %>
+	<script>
+		alert('로그인 사용자만 등록 가능합니다.');
+		location.href='list.jsp';
+	</script>
+	<%} %>
 	
 	<%@ include file="../inc/footer.jsp"%>
