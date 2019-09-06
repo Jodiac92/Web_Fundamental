@@ -5,12 +5,3 @@
 	{"name" : "스티브유", "clubid":"box"}
 	]
 }
-
-{
-	"info" : "공지사항입니다",
-	"" : 
-	"items" : [
-	{"m_seq" : 2, "m_id" : "syh21", "m_email" : "syho@hbil.org", "m_name" : "성영한", },
-	{},
-	]
-}

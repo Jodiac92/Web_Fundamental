@@ -20,6 +20,21 @@
               <div class="form-group">
                 <input type="password" id="pwd" name="pwd" class="form-control" placeholder="Your Password *" value="" />
               </div>
+              
+              <!-- captcha -->
+             <div class="form-row d-flex align-items-center">
+                      <div class="form-group col-md-8">
+                        <img class="form-control" src="" id="img_form_url"/>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <a href="" id="refreshNumber" class="btn btn-info btn-lg btn-block"><i class="fa fa-refresh" aria-hidden="true"></i> REFRESH</a>
+                      </div>
+              </div>
+              <div class="form-group">
+                      <input type="text" name="captchaCode" id="captchaCode" class="form-control" placeholder="캡차코드를 입력하세요" value="" />
+              </div>
+              
+              
               <div class="form-group">
                 <input type="submit" id="checkLogin" class="btn btn-primary" value="Login" />
               </div>
@@ -29,6 +44,7 @@
             </form>
             <script>
             	$(function(){
+            		let captchakey = "";
             		$("#checkLogin").on("click",function(event){
             			event.preventDefault();
             			if($("#email").val()==""){
@@ -43,7 +59,35 @@
             			}
             			f.submit();
             		});
-            	});
+            		
+            		var loadImage = function(){
+            			$.ajax({
+            				url : 'captcha/getKey.jsp',
+            				type : 'GET',
+            				dataType : 'json',
+            				error : function(){
+            					alert('Error loading JSON');
+            				},
+            				success : function(json){
+            					console.log(json);
+            					captchakey = json.key;
+            					$.ajax({
+            						type : 'GET',
+            						url : 'captcha/getImage.jsp?key='+captchaKey, xhrFields : {
+            							responseType : 'blob'
+            						},
+            						success : function(data){
+            							const url = window.URL || window.webketURL;
+            							const src = url.createObjectURL(data);
+            							$("#img_form_url").attr("src",src);
+            						}
+            					});
+            				}//end of success
+            			});//end of outter ajax
+            		}//end of loadImage function
+            		loadImage();
+            		
+            	});//end of onload event
             </script>
             <%}else{ %>
             	<h5 class="card-title">로그인을 하셨습니다.</h5>
