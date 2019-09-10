@@ -12,12 +12,13 @@ import kr.co.kic.dev1.util.ConnLocator;
 public class NoticeDao {
 	private static NoticeDao single;
 	private NoticeDao() {}
-	public static NoticeDao getInstance(){
+	public static NoticeDao getInstance() {
 		if(single == null) {
 			single = new NoticeDao();
 		}
 		return single;
 	}
+	
 	public boolean insert(NoticeDto n) {
 		boolean isSuccess = false;
 		Connection con = null;
@@ -27,8 +28,8 @@ public class NoticeDao {
 		try {
 			con = ConnLocator.getConnection();
 			StringBuffer sql = new StringBuffer();
-			sql.append("INSERT INTO notice(n_num, n_writer, n_title, n_content, n_regdate) ");
-			sql.append("VALUES(NULL,?,?,?,NOW()) ");
+			sql.append("INSERT INTO notice(n_num, n_writer, n_title,n_content,n_regdate) 	");
+			sql.append("VALUES(NULL,?,?,?,NOW())											");
 			
 			pstmt = con.prepareStatement(sql.toString());
 			//바인딩 변수 세팅
@@ -43,12 +44,12 @@ public class NoticeDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if(pstmt !=null) pstmt.close();
-				if(con !=null) con.close();
+				if(pstmt != null) pstmt.close();
+				if(con != null) con.close();
 			} catch (SQLException e2) {
 				// TODO: handle exception
 			}
-		}
+		}		
 		return isSuccess;
 	}
 	public boolean update(NoticeDto n) {
@@ -60,16 +61,17 @@ public class NoticeDao {
 		try {
 			con = ConnLocator.getConnection();
 			StringBuffer sql = new StringBuffer();
-			sql.append("UPDATE notice ");
-			sql.append("SET n_writer = ?, n_title=?, n_content=?, n_regdate=NOW() ");
-			sql.append("WHERE n_num = ? ");
+			sql.append("UPDATE notice 						");
+			sql.append("SET n_writer = ?, n_title = ?,  	");
+			sql.append("n_content = ?, n_regdate = NOW() 	");
+			sql.append("WHERE n_num = ? 					");
 			
 			pstmt = con.prepareStatement(sql.toString());
 			//바인딩 변수 세팅
 			pstmt.setString(index++, n.getWriter());
 			pstmt.setString(index++, n.getTitle());
 			pstmt.setString(index++, n.getContent());
-			pstmt.setInt(index++, n.getNum());
+			pstmt.setInt(index++,n.getNum());
 			
 			pstmt.executeUpdate();
 			isSuccess = true;
@@ -78,12 +80,12 @@ public class NoticeDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if(pstmt !=null) pstmt.close();
-				if(con !=null) con.close();
+				if(pstmt != null) pstmt.close();
+				if(con != null) con.close();
 			} catch (SQLException e2) {
 				// TODO: handle exception
 			}
-		}
+		}		
 		return isSuccess;
 	}
 	public boolean delete(int num) {
@@ -95,13 +97,12 @@ public class NoticeDao {
 		try {
 			con = ConnLocator.getConnection();
 			StringBuffer sql = new StringBuffer();
-			sql.append("DELETE FROM notice ");
-			sql.append("WHERE n_num = ? ");
+			sql.append("DELETE FROM notice 	");
+			sql.append("WHERE n_num = ?		");
 			
 			pstmt = con.prepareStatement(sql.toString());
 			//바인딩 변수 세팅
-			pstmt.setInt(index++, num);
-			
+			pstmt.setInt(index++,num);
 			
 			pstmt.executeUpdate();
 			isSuccess = true;
@@ -110,14 +111,15 @@ public class NoticeDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if(pstmt !=null) pstmt.close();
-				if(con !=null) con.close();
+				if(pstmt != null) pstmt.close();
+				if(con != null) con.close();
 			} catch (SQLException e2) {
 				// TODO: handle exception
 			}
-		}
+		}		
 		return isSuccess;
 	}
+	
 	public NoticeDto select(int num) {
 		NoticeDto obj = null;
 		Connection con = null;
@@ -127,9 +129,9 @@ public class NoticeDao {
 		try {
 			con = ConnLocator.getConnection();
 			StringBuffer sql = new StringBuffer();
-			sql.append("SELECT n_num, n_writer, n_title, n_content, DATE_FORMAT(n_regdate,'%Y/%m/%d') ");
+			sql.append("SELECT n_num, n_writer, n_title, n_content,date_format(n_regdate,'%Y/%m/%d') ");
 			sql.append("FROM notice ");
-			sql.append("WHERE n_num = ? ");
+			sql.append("WHERE n_num = ?");
 			
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setInt(index++, num);
@@ -142,16 +144,15 @@ public class NoticeDao {
 				String title = rs.getString(index++);
 				String content = rs.getString(index++);
 				String regdate = rs.getString(index++);
-				obj = new NoticeDto(_num, writer, title, content, regdate);
+				obj = new NoticeDto(_num,writer,title,content,regdate);
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if(rs !=null) rs.close();
-				if(pstmt !=null) pstmt.close();
-				if(con !=null) con.close();
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(con != null) con.close();
 			} catch (SQLException e2) {
 				// TODO: handle exception
 			}
@@ -169,10 +170,10 @@ public class NoticeDao {
 		try {
 			con = ConnLocator.getConnection();
 			StringBuffer sql = new StringBuffer();
-			sql.append("SELECT n_num, n_writer, n_title, DATE_FORMAT(n_regdate,'%Y/%m/%d') ");
+			sql.append("SELECT n_num, n_writer, n_title,date_format(n_regdate,'%Y/%m/%d') ");
 			sql.append("FROM notice ");
 			sql.append("ORDER BY n_num DESC ");
-			sql.append("LIMIT ?,? ");
+			sql.append("LIMIT ?,?");
 			
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setInt(index++, start);
@@ -185,21 +186,54 @@ public class NoticeDao {
 				String writer = rs.getString(index++);
 				String title = rs.getString(index++);
 				String regdate = rs.getString(index++);
-				list.add(new NoticeDto(num,writer,title,regdate));
+				list.add(new NoticeDto(num, writer, title, regdate));
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if(rs !=null) rs.close();
-				if(pstmt !=null) pstmt.close();
-				if(con !=null) con.close();
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(con != null) con.close();
 			} catch (SQLException e2) {
 				// TODO: handle exception
 			}
 		}
+		
 		return list;
 	}
+	public int getRows() {
+		int count = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int index = 1;
+		try {
+			con = ConnLocator.getConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT COUNT(*) FROM notice");
+			
+			pstmt = con.prepareStatement(sql.toString());
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				index = 1;
+				count = rs.getInt(index);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(con != null) con.close();
+			} catch (SQLException e2) {
+				// TODO: handle exception
+			}
+		}
+		return count;
+	}
+	
 	
 }

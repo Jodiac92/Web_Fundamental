@@ -1,17 +1,9 @@
-<%@page import="kr.co.kic.dev1.dto.MemberDto"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="kr.co.kic.dev1.dao.MemberDao"%>
 <%@ page pageEncoding="UTF-8"%>
+<%@ page import="kr.co.kic.dev1.dto.DeptDto"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="kr.co.kic.dev1.dao.DeptDao"%>
 <%@ include file="../inc/header.jsp" %>
 <%
-	
-	/*								start   length
-		page = 1 => 1  ~ 10 => limit 0 ,    10
-		page = 2 => 11 ~ 20 => limit 10,    10
-		page = 3 => 21 ~ 30 => limit 20,    10
-		등차수열 공식 => An = a1 + (n-1)*d
-		start =  0 + (page-1)*10
-	*/
 	String tempPage = request.getParameter("page");
 	System.out.println(tempPage);
 	int cPage = 0;
@@ -31,49 +23,10 @@
 	int start = (cPage-1) * length;
 	int pageNum = 0;
 	
-	MemberDao dao = MemberDao.getInstance();
-	ArrayList<MemberDto> list = dao.select(start,length);
+	DeptDao dao = DeptDao.getInstance();
+	ArrayList<DeptDto> list = dao.select(start, length);
 	
-	/*
-	 totalRows => 258 개
-	 
-	 cPage = 1 : startPage = 1, endPage = 10;
-	 cPage = 2 : startPage = 1, endPage = 10;
-	 ..
-	 cPage = 10 : startPage = 1, endPage = 10;
-	 
-	
-	 
-	 cPage = 11 : startPage = 11, endPage = 20;
-	 cPage = 12 : startPage = 11, endPage = 20;
-	 ....
-	 cPage = 20 : startPage = 11, endPage = 20;
-	
-	 
-	 cPage = 21 : startPage = 21, endPage = 26;
-	 cPage = 22 : startPage = 21, endPage = 26;
-	 ....
-	 cPage = 26 : startPage = 21, endPage = 26;
-	 
-	 
-	 currentBlock = 1 => startPage = 1, endPage = 10;
-	 currentBlock = 2 => startPage = 11, endPage = 20;
-	 currentBlock = 3 => startPage = 21, endPage = 26;
-	 
-	*/
-	int totalRows = dao.getRows();//63개
-	
-	/*
-		63 62 61 60 59 58 57 56 55 54 	=> page = 1
-		53 52 51 50 49 48 47 46 45 44 	=> page = 2
-		43 .....
-		33 .....
-		23 .....
-		13 .....
-		3 2 1							=> page = 7;
-		An = a1 + (n-1)*d;
-	*/
-	
+	int totalRows = dao.getRows();
 	pageNum = totalRows + (cPage -1)*(-length);
 	
 	totalPage = totalRows%length == 0 ? 
@@ -95,12 +48,12 @@
 	if(currentBlock == totalBlock){
 		endPage = totalPage;
 	}
-
+	
 %>
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb justify-content-end">
 			<li class="breadcrumb-item"><a href="/">Home</a></li>
-			<li class="breadcrumb-item active" aria-current="page">Member</li>
+			<li class="breadcrumb-item active" aria-current="page">Dept</li>
 		</ol>
 	</nav>
 	<div class="container">
@@ -108,58 +61,46 @@
 			<div class="col-sm-12">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title">회원</h5>
-
+						<h5 class="card-title">부서</h5>
 						<div class="table-responsive-md">
 							<table class="table table-hover">
 								<colgroup>
-									<col width="10%" />
-									<col width="15%" />
-									<col width="15%" />
-									<col width="20%" />
-									<col width="20%" />
-									<col width="20%" />
+									<col width="30%" />
+									<col width="30%" />
+									<col width="40%" />
 								</colgroup>
 								<thead>
 									<tr>
-										<th scope="col">#</th>
-										<th scope="col">이름</th>
-										<th scope="col">아이디</th>
-										<th scope="col">이메일</th>
-										<th scope="col">핸드폰번호</th>
-										<th scope="col">등록날짜</th>
+										<th scope="col">부서번호</th>
+										<th scope="col">부서이름</th>
+										<th scope="col">위치</th>
 									</tr>
 								</thead>
-								<tbody id="table_body">
-								<%
+								<tbody>
+									<%
 									if(list.size() != 0){
 										for(int i=0;i<list.size();i++){
-											MemberDto dto = list.get(i);
-											int seq = dto.getSeq();
+											DeptDto dto = list.get(i);
+											int deptno = dto.getNo();
 											String name = dto.getName();
-											String id = dto.getId();
-											String email = dto.getEmail();
-											String phone = dto.getPhone();
-											String regdate = dto.getRegdate();
-								%>
+											String loc = dto.getLoc();
+									%>
 									<tr>
-										<th scope="row"><%=pageNum-- %></th>
+										<th scope="row"><a href="view.jsp?no=<%=deptno%>"><%=deptno  %></a></th>
 										<td><%=name %></td>
-										<td><a href="view.jsp?seq=<%=seq%>&page=<%=cPage%>"><%=id %></a></td>
-										<td><%=email %></td>
-										<td><%=phone %></td>
-										<td><%=regdate %></td>
+										<td><%=loc %></td>
 									</tr>
-								<%
+									<%
 										}
 									}else{ 
-								%>	
+									%>
 									<tr>
-										<td class="text-center" colspan="6">회원정보가 없습니다.</td>
+										<td class="text-center" colspan="3" scope="row">부서가 존재하지 않습니다.</td>
 									</tr>
-								<%	} %>
+									<%} %>
 								</tbody>
 							</table>
+
 							<nav aria-label="Page navigation example">
 								<ul class="pagination pagination-lg justify-content-center">
 									<%if(currentBlock != 1){ %>
@@ -184,26 +125,13 @@
 										<a class="page-link" href="#">&raquo;</a>
 									</li>
 									<%} %>
-									
 								</ul>
 							</nav>
 						</div>
 					</div>
 				</div>
-
 			</div>
+
 		</div>
-		</div>
-		
-		<%@ include file="../inc/footer.jsp"%>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	</div>
+	<%@ include file="../inc/footer.jsp"%>

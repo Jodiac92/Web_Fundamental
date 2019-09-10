@@ -19,19 +19,11 @@ public class NoticeDto {
 		this.regdate = regdate;
 	}
 	public NoticeDto(int num, String writer, String title, String regdate) {
-		// TODO Auto-generated constructor stub
-		this(num, writer, title, null, regdate); //재사용(100점)
-		/*
-		this.num = num;
-		this.writer = writer;
-		this.title = title;
-		this.regdate = regdate; (50점)
-		*/	
+		this(num, writer,title,null,regdate);
 	}
 	
 	public NoticeDto(String writer, String title, String content) {
 		this(0,writer,title,content,null);
-		
 	}
 	public int getNum() {
 		return num;

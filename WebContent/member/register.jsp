@@ -158,6 +158,7 @@
 							});
 						}
 					});//end of id key event
+					
 					$("#email").on("keyup",function(){
 						$("#email").removeClass("is-invalid");
 						$("#emailMessage").html('');
@@ -196,7 +197,7 @@
 					});
 					$("#phone").on("keyup",function(){
 						$("#phone").removeClass("is-invalid");
-						$("#phone").html('');
+						$("#phoneMessage").html('');
 					});
 				});//enf of load event
 			</script>

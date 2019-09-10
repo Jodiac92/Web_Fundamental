@@ -12,7 +12,9 @@ public class MemberDto {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public MemberDto(int seq, String id, String email, String name, String pwd, String phone, String regdate) {
+	
+	public MemberDto(int seq, String id, String email, 
+			String name, String pwd, String phone, String regdate) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -21,26 +23,22 @@ public class MemberDto {
 		this.pwd = pwd;
 		this.phone = phone;
 		this.regdate = regdate;
-		
 	}
-	public MemberDto(String email, String pwd) {
+	public MemberDto(String email,String pwd) {
 		this(0,null,email,null,pwd,null,null);
 	}
-	
-	
-	public MemberDto(int seq, String id, String email, String name, String phone, String regdate) {
-	this(seq,id,email,name,null,phone,regdate);
+	public MemberDto(int seq, String id, String email, 
+			String name, String phone, String regdate) {
+		this(seq,id,email,name,null,phone,regdate);
 	}
-	
-	public MemberDto(String id, String email,String name,  String pwd, String phone) {
+	public MemberDto(String id, String email, 
+			String name, String pwd, String phone) {
 		this(0,id,email,name,pwd,phone,null);
 	}
-	
-	public MemberDto(int seq, String id, String email, String name, String phone) {
+	public MemberDto(int seq, String id, String email, 
+			String name, String phone) {
 		this(seq,id,email,name,null,phone,null);
 	}
-	
-
 	public int getSeq() {
 		return seq;
 	}
@@ -82,5 +80,7 @@ public class MemberDto {
 	}
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
-	} 
+	}
+	
+	
 }
